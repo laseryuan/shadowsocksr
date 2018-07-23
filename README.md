@@ -3,19 +3,18 @@
 read -p 'port number: ' PORT && echo $PORT
 read -p 'ssr password: ' PASSWORD && echo $PASSWORD
 
-docker run -d --restart always -p $PORT:443 --name ssrr lasery/rpi-shadowsocksr:armv6hf python server.py -p 443 -k $PASSWORD -m aes-256-cfb -O origin
+docker run -d --restart always -p $PORT:443 --name ssrr lasery/rpi-shadowsocksr:20180723 python server.py -p 443 -k $PASSWORD -m aes-256-cfb -O origin
 ```
 
 # Development
+git clone git@github.com:laseryuan/docker-rpi-shadowsocksr.git
+https://github.com/shadowsocksrr/shadowsocksr
 
-## armv6hf
-```
-docker build -t lasery/rpi-shadowsocksr:armv6hf -f Dockerfile.armv6hf .
-docker push lasery/rpi-shadowsocksr:armv6hf
-```
-
-## raspbian
 ```
 docker build -t lasery/rpi-shadowsocksr .
-docker push lasery/rpi-shadowsocksr
+docker run -d --restart always -p $PORT:443 --name ssrr lasery/rpi-shadowsocksr python server.py -p 443 -k $PASSWORD -m aes-256-cfb -O origin
+
+docker tag lasery/rpi-shadowsocksr lasery/rpi-shadowsocksr:20180723
+docker push lasery/rpi-shadowsocksr:20180723
 ```
+

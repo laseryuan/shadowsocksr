@@ -1,11 +1,8 @@
-FROM resin/rpi-raspbian:jessie-20170111
+FROM resin/raspberry-pi-python
 
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN apt-get -y install git python
+ADD ./ssrr-3.2.2.tar.gz /tmp/
+RUN mv /tmp/shadowsocksr-3.2.2 /root/shadowsocksr
 
-RUN git clone -b manyuser https://github.com/shadowsocksr/shadowsocksr.git
+RUN cd /root/shadowsocksr && bash initcfg.sh
 
-RUN cd shadowsocksr && bash initcfg.sh
-
-WORKDIR /shadowsocksr/shadowsocks
+WORKDIR /root/shadowsocksr/shadowsocks

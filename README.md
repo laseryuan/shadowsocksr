@@ -6,8 +6,9 @@ read -p 'Sever password: ' SERVER_PASSWORD && SERVER_PASSWORD=${SERVER_PASSWORD:
 read -p 'Sever port number: ' SERVER_PORT && SERVER_PORT=${SERVER_PORT:-14443} && echo $SERVER_PORT
 
 docker run -d --restart always -p $SERVER_PORT:8388 --name ssr-server lasery/rpi-shadowsocksr:20180723 python server.py \
--s 0.0.0.0 -p 8388 -k $SERVER_PASSWORD -m aes-256-cfb
--s 0.0.0.0 -p 8388 -k $SERVER_PASSWORD -m aes-256-cfb -O origin
+-s 0.0.0.0 -p 8388 -m aes-256-cfb \
+-O origin \
+-k $SERVER_PASSWORD
 ```
 
 Client:
@@ -18,8 +19,9 @@ read -p 'Server port number: ' SERVER_PORT && SERVER_PORT=${SERVER_PORT:-14443} 
 read -p 'Socks5 port number: ' SOCKS_PORT && SOCKS_PORT=${SOCKS_PORT:-1080} && echo $SOCKS_PORT
 
 docker run -d --restart always -p $SOCKS_PORT:1080 --name ssr-client lasery/rpi-shadowsocksr:20180723 python local.py \
--s $SERVER_NAME -p 11986 -l 1080 -k $SERVER_PASSWORD -m aes-256-cfb -b 0.0.0.0
--s $SERVER_NAME -p 11986 -l 1080 -k $SERVER_PASSWORD -m aes-256-cfb -b 0.0.0.0 -O origin
+-l 1080 -m aes-256-cfb -b 0.0.0.0 \
+-O origin \
+-s $SERVER_NAME -p $SERVER_PORT -k $SERVER_PASSWORD
 ```
 
 # Test

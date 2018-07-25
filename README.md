@@ -25,7 +25,8 @@ docker run -d --restart always -p $SOCKS_PORT:1080 --name ssr-client lasery/rpi-
 ```
 
 # Test
-curl --proxy socks5h://localhost:1080 https://check.torproject.org/api/ip
+curl --proxy socks5://localhost:1080 https://check.torproject.org/api/ip
+curl --proxy socks5h://localhost:1080 https://check.torproject.org/api/ip # Transparent DNS
 
 # Development
 ```

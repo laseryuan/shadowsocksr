@@ -6,7 +6,9 @@ read -p 'Sever password: ' SERVER_PASSWORD && SERVER_PASSWORD=${SERVER_PASSWORD:
 read -p 'Sever port number: ' SERVER_PORT && SERVER_PORT=${SERVER_PORT:-14443} && echo $SERVER_PORT
 
 docker run -d --restart always -p $SERVER_PORT:8388 --name ssr-server lasery/rpi-shadowsocksr:20180723 python server.py \
--s 0.0.0.0 -p 8388 -m aes-256-cfb \
+-s 0.0.0.0 \
+-p 8388 \
+-m aes-256-cfb \
 -O origin \
 -k $SERVER_PASSWORD
 ```
@@ -31,6 +33,8 @@ curl --proxy socks5h://localhost:1080 https://check.torproject.org/api/ip # Tran
 # Development
 ```
 git clone git@github.com:laseryuan/docker-rpi-shadowsocksr.git
+
+docker run --rm -p 14443:8388 --name ssr-server lasery/rpi-shadowsocksr:20180723 python server.py -s 0.0.0.0 -p 8388 -m aes-256-cfb -O origin -u -k MY_SSPASSWORD
 
 docker build -t lasery/rpi-shadowsocksr .
 docker tag lasery/rpi-shadowsocksr lasery/rpi-shadowsocksr:20180723

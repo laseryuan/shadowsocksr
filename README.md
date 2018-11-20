@@ -4,7 +4,10 @@ Server:
 ```
 read -p 'Sever password: ' SERVER_PASSWORD && SERVER_PASSWORD=${SERVER_PASSWORD:-MY_SSPASSWORD} && echo $SERVER_PASSWORD
 read -p 'Sever port number: ' SERVER_PORT && SERVER_PORT=${SERVER_PORT:-14443} && echo $SERVER_PORT
+```
 
+* Forward both tcp and udp ports on the router to allow the "-u" option in "ss-redir"
+```
 docker run -d --restart always -p $SERVER_PORT:8388 -p $SERVER_PORT:8388/udp --name ssr-server lasery/rpi-shadowsocksr:18.07 python server.py \
 -s 0.0.0.0 \
 -p 8388 \

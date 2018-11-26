@@ -1,4 +1,6 @@
-FROM resin/raspberry-pi-python
+ARG python
+
+FROM $python
 
 ADD ./ssrr-3.2.2.tar.gz /tmp/
 RUN mv /tmp/shadowsocksr-3.2.2 /root/shadowsocksr

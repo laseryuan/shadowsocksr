@@ -24,5 +24,7 @@ USER shadowsocksr
 
 WORKDIR /home/shadowsocksr/app/shadowsocks/
 
+COPY --chown=shadowsocksr config.json ./../user-config.json
+
 COPY --chown=shadowsocksr docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]

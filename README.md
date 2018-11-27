@@ -1,23 +1,16 @@
 # Usage
 
 ## Server:
-```
-read -p 'Sever password: ' SERVER_PASSWORD && SERVER_PASSWORD=${SERVER_PASSWORD:-MY_SSPASSWORD} && echo $SERVER_PASSWORD
-read -p 'Sever port number: ' SERVER_PORT && SERVER_PORT=${SERVER_PORT:-14443} && echo $SERVER_PORT
-```
 
 * Forward both tcp and udp ports on the router to allow the "-u" option in "ss-redir"
 ```
-docker run -d --restart always \
+docker run --rm lasery/shadowsocksr help
+
+docker run -it --restart always \
   --name ssr-server \
   -p $SERVER_PORT:8388 -p $SERVER_PORT:8388/udp \
   lasery/shadowsocksr \
-  python server.py \
-  -s 0.0.0.0 \
-  -p 8388 \
-  -m aes-256-cfb \
-  -O origin \
-  -k $SERVER_PASSWORD
+  server
 ```
 
 ## Client:
@@ -44,12 +37,9 @@ docker run -it --rm \
   lasery/shadowsocksr \
   bash
 
-  python server.py \
-  -s 0.0.0.0 \
-  -p 8388 \
-  -m aes-256-cfb \
-  -O origin \
-  -k MY_SSPASSWORD
+  python server.py
+
+  -v $(pwd)/config.json:/home/shadowsocksr/app/user-config.json \
 ```
 
 - arm32v6

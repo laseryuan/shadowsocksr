@@ -15,4 +15,14 @@ RUN apt-get install -y \
   netcat \
   --no-install-recommends
 
-WORKDIR /root/shadowsocksr/shadowsocks
+RUN useradd -ms /bin/bash shadowsocksr
+
+RUN mv /root/shadowsocksr /home/shadowsocksr/app
+RUN chown shadowsocksr:shadowsocksr -R /home/shadowsocksr/app
+
+USER shadowsocksr
+
+WORKDIR /home/shadowsocksr/app/shadowsocks/
+
+COPY --chown=shadowsocksr docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]

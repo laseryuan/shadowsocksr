@@ -37,10 +37,13 @@ docker run -d --restart always -p $SOCKS_PORT:1080 --name ssr-client lasery/rpi-
 ```
 SSR_VERSION=18.11
 
-docker run --rm \
-  -p 14443:8388 -p 14443:8388/udp \
+docker run -it --rm \
   --name ssr-server \
+  -p 14443:8388 -p 14443:8388/udp \
+  -v $(pwd)/docker-entrypoint.sh:/docker-entrypoint.sh \
   lasery/shadowsocksr \
+  bash
+
   python server.py \
   -s 0.0.0.0 \
   -p 8388 \
@@ -59,7 +62,7 @@ docker push lasery/shadowsocksr:${SSR_VERSION}-arm32v6
 
 - amd64
 ```
-docker build -t lasery/shadowsocksr -f Dockerfile.amd64 .
+docker build -t lasery/shadowsocksr --build-arg python=python:3.7.1-stretch .
 
 docker tag lasery/shadowsocksr lasery/shadowsocksr:${SSR_VERSION}-amd64
 docker push lasery/shadowsocksr:${SSR_VERSION}-amd64

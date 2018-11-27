@@ -23,7 +23,7 @@ run-server() {
 run-help() {
   echo docker run -it --restart always \
     --name ssr-server \
-    -p {SERVER_PORT}:8388 -p {SERVER_PORT}:8388/udp \
+    -p {SERVER_PORT\|14443}:8388 -p {SERVER_PORT\|14443}:8388/udp \
     lasery/shadowsocksr \
     server
 }

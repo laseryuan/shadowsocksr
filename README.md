@@ -1,16 +1,8 @@
 # Usage
 
 ## Server:
-
-* Forward both tcp and udp ports on the router to allow the "-u" option in "ss-redir"
 ```
 docker run --rm lasery/shadowsocksr help
-
-docker run -it --restart always \
-  --name ssr-server \
-  -p $SERVER_PORT:8388 -p $SERVER_PORT:8388/udp \
-  lasery/shadowsocksr \
-  server
 ```
 
 ## Client:
